@@ -12,11 +12,8 @@ namespace NonFactors.Mvc.Grid
         IHtmlGrid<T> ProcessWith(IGridProcessor<T> processor);
         IHtmlGrid<T> WithSourceUrl(String url);
 
-        IHtmlGrid<T> Filterable(Boolean isFilterable);
         IHtmlGrid<T> MultiFilterable();
         IHtmlGrid<T> Filterable();
-
-        IHtmlGrid<T> Sortable(Boolean isSortable);
         IHtmlGrid<T> Sortable();
 
         IHtmlGrid<T> RowAttributed(Func<T, Object> htmlAttributes);
