@@ -171,7 +171,8 @@ namespace NonFactors.Mvc.Grid
             if (keys.Length == 1)
             {
                 String[] values = column.Grid.Query.GetValues(keys[0]);
-                if (values.Length < 2) return null;
+                if (values.Length < 2)
+                    return null;
 
                 String keyType = keys[0].Substring((prefix + column.Name + "-").Length);
 
@@ -185,7 +186,8 @@ namespace NonFactors.Mvc.Grid
         }
         private IGridFilter GetFirstFilter<T>(String prefix, IGridColumn<T> column, String[] keys)
         {
-            if (keys.Length == 0) return null;
+            if (keys.Length == 0)
+                return null;
 
             String type = keys[0].Substring((prefix + column.Name + "-").Length);
             String value = column.Grid.Query.GetValues(keys[0])[0];
@@ -195,7 +197,8 @@ namespace NonFactors.Mvc.Grid
         private String GetOperator<T>(String prefix, IGridColumn<T> column)
         {
             String[] values = column.Grid.Query.GetValues(prefix + column.Name + "-Op");
-            if (column.IsMultiFilterable != true || values == null) return null;
+            if (column.IsMultiFilterable != true || values == null)
+                return null;
 
             return values[0];
         }
