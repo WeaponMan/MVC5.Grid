@@ -17,10 +17,7 @@ namespace NonFactors.Mvc.Grid
         GridSortOrder? FirstSortOrder { get; set; }
         GridSortOrder? InitialSortOrder { get; set; }
 
-        String FilterName { get; set; }
         IGridColumnFilter Filter { get; }
-        Boolean? IsFilterable { get; set; }
-        Boolean? IsMultiFilterable { get; set; }
 
         IHtmlString ValueFor(IGridRow<Object> row);
     }
