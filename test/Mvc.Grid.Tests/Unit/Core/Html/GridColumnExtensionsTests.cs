@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using System;
+using System.Linq.Expressions;
 using System.Web;
 using Xunit;
 
@@ -11,7 +12,11 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         public GridColumnExtensionsTests()
         {
-            column = Substitute.ForPartsOf<BaseGridColumn<GridModel, String>>();
+            Expression<Func<GridModel, String>> expression = (model) => model.Name;
+            column = Substitute.For<IGridColumn<GridModel>>();
+            column.Expression.Returns(expression);
+
+            column.Filter = new GridColumnFilter<GridModel>(column);
         }
 
         #region RenderedAs<T>(this IGridColumn<T> column, Func<T, Object> value)
