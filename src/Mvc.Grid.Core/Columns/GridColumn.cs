@@ -11,39 +11,8 @@ namespace NonFactors.Mvc.Grid
 {
     public class GridColumn<T, TValue> : BaseGridColumn<T, TValue> where T : class
     {
-        private Boolean SortOrderIsSet { get; set; }
-        public override GridSortOrder? SortOrder
-        {
-            get
-            {
-                if (SortOrderIsSet)
-                    return base.SortOrder;
-
-                String prefix = String.IsNullOrEmpty(Grid.Name) ? "" : Grid.Name + "-";
-                if (Grid.Query[prefix + "Sort"] == Name)
-                {
-                    String orderValue = Grid.Query[prefix + "Order"];
-                    if (Enum.TryParse(orderValue, out GridSortOrder order))
-                        SortOrder = order;
-                }
-                else if (Grid.Query[prefix + "Sort"] == null)
-                {
-                    SortOrder = InitialSortOrder;
-                }
-
-                SortOrderIsSet = true;
-
-                return base.SortOrder;
-            }
-            set
-            {
-                base.SortOrder = value;
-                SortOrderIsSet = true;
-            }
-        }
-
         private Boolean FilterIsSet { get; set; }
-        public override IGridColumnFilter<T> Filter
+        public override IGridColumnFilter<T, TValue> Filter
         {
             get
             {
@@ -67,21 +36,13 @@ namespace NonFactors.Mvc.Grid
             Title = GetTitle(expression);
             ProcessorType = GridProcessorType.Pre;
             ExpressionValue = expression.Compile();
+            Sort = new GridColumnSort<T, TValue>(this);
             Name = ExpressionHelper.GetExpressionText(expression);
-            IsSortable = expression.Body is MemberExpression ? (Boolean?)null : false;
         }
 
         public override IQueryable<T> Process(IQueryable<T> items)
         {
-            items = Filter.Apply(items);
-
-            if (IsSortable != true || SortOrder == null)
-                return items;
-
-            if (SortOrder == GridSortOrder.Asc)
-                return items.OrderBy(Expression);
-
-            return items.OrderByDescending(Expression);
+            return Sort.Apply(Filter.Apply(items));
         }
         public override IHtmlString ValueFor(IGridRow<Object> row)
         {

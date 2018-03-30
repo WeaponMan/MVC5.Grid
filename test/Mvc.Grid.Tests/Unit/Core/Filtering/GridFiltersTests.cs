@@ -9,8 +9,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 {
     public class GridFiltersTests
     {
-        private IGridColumn<GridModel> column;
         private GridFilters filters;
+        private IGridColumn<GridModel, String> column;
 
         public GridFiltersTests()
         {
@@ -124,7 +124,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         #endregion
 
-        #region GetFilter<T>(IGridColumn<T> column)
+        #region GetFilter<T, TValue>(IGridColumn<T, TValue> column)
 
         [Theory]
         [InlineData("", "Name-Equals")]
@@ -155,9 +155,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         {
             column.Grid.Name = name;
             column.Grid.Query = HttpUtility.ParseQueryString(query);
-            column = new GridColumn<GridModel, Object>(column.Grid, model => model.Name);
+            GridColumn<GridModel, Object> testColumn = new GridColumn<GridModel, Object>(column.Grid, model => model.Name);
 
-            Assert.Null(filters.GetFilter(column).Second);
+            Assert.Null(filters.GetFilter(testColumn).Second);
         }
 
         [Theory]
@@ -231,9 +231,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         public void GetFilter_NotFoundValueType_SetsFirstFilterToNull()
         {
             column.Grid.Query = HttpUtility.ParseQueryString("Name-Contains=a&Name-Equals=b&Name-Op=And");
-            column = new GridColumn<GridModel, Object>(column.Grid, model => model.Name);
+            GridColumn<GridModel, Object> testColumn = new GridColumn<GridModel, Object>(column.Grid, model => model.Name);
 
-            Assert.Null(filters.GetFilter(column).First);
+            Assert.Null(filters.GetFilter(testColumn).First);
         }
 
         [Theory]
@@ -324,7 +324,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void GetFilter_ReturnsGridColumnFilter()
         {
-            Type expected = typeof(GridColumnFilter<GridModel>);
+            Type expected = typeof(GridColumnFilter<GridModel, String>);
             Type actual = filters.GetFilter(column).GetType();
 
             Assert.Equal(expected, actual);

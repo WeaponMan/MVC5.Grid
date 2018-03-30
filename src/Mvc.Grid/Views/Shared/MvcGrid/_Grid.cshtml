@@ -8,7 +8,7 @@
             <tr class="mvc-grid-headers @(Model.FilterMode == GridFilterMode.HeaderRow ? "mvc-grid-row-filters" : "")">
                 @foreach (IGridColumn column in Model.Columns)
                 {
-                    String sortableClass = column.IsSortable == true && Model.FilterMode != GridFilterMode.HeaderRow ? "sortable" : null;
+                    String sortableClass = column.Sort.IsEnabled == true && Model.FilterMode != GridFilterMode.HeaderRow ? "sortable" : null;
                     String filterableClass = column.Filter.IsEnabled == true ? "filterable" : null;
 
                     <th class="@filterableClass @sortableClass @column.CssClasses"
@@ -21,9 +21,9 @@
                         data-filter-operator="@column.Filter.Operator"
                         data-filter-second-type="@(column.Filter.Second != null ? column.Filter.Second.Type : "")"
                         data-filter-second-val="@(column.Filter.Second != null ? column.Filter.Second.Value : "")"
-                        data-sort="@column.IsSortable"
-                        data-sort-order="@column.SortOrder"
-                        data-sort-first="@column.FirstSortOrder">
+                        data-sort="@column.Sort.IsEnabled"
+                        data-sort-order="@column.Sort.Order"
+                        data-sort-first="@column.Sort.FirstOrder">
                         @if (column.Filter.IsEnabled == true && Model.FilterMode != GridFilterMode.FilterRow)
                         {
                             String filterApplied = (column.Filter.First ?? column.Filter.Second) != null ? "applied" : "";
@@ -31,20 +31,20 @@
                             if (Model.FilterMode == GridFilterMode.HeaderRow)
                             {
                                 <div class="first-filter">
-                                    <input class="mvc-grid-type" type="hidden" value="@column.Filter.First?.Type" />
-                                    <input class="mvc-grid-input" value="@column.Filter.First?.Value" placeholder="@column.Title" />
+                                    <input class="mvc-grid-type" type="hidden" value="@(column.Filter.First != null ? column.Filter.First.Type : "")" />
+                                    <input class="mvc-grid-input" value="@(column.Filter.First.Value != null ? column.Filter.First.Value : "")" placeholder="@column.Title" />
                                     <a href="#" class="mvc-grid-filter @filterApplied"></a>
                                 </div>
                             }
                             else
                             {
-                                <span class="mvc-grid-header-title @column.SortOrder?.ToString().ToLower()">@column.Title</span>
+                                <span class="mvc-grid-header-title @column.Sort.Order.ToString().ToLower()">@column.Title</span>
                                 <a href="#" class="mvc-grid-filter @filterApplied"></a>
                             }
                         }
                         else
                         {
-                            <span class="mvc-grid-header-title @column.SortOrder?.ToString().ToLower()">@column.Title</span>
+                            <span class="mvc-grid-header-title @column.Sort.Order.ToString().ToLower()">@column.Title</span>
                         }
                     </th>
                 }
@@ -60,8 +60,8 @@
                                 @{ String filterApplied = (column.Filter.First ?? column.Filter.Second) != null ? "applied" : ""; }
 
                                 <div class="first-filter">
-                                    <input class="mvc-grid-type" type="hidden" value="@column.Filter.First?.Type" />
-                                    <input class="mvc-grid-input" value="@column.Filter.First?.Value" />
+                                    <input class="mvc-grid-type" type="hidden" value="@(column.Filter.First != null ? column.Filter.First.Type : "")" />
+                                    <input class="mvc-grid-input" value="@(column.Filter.First.Value != null ? column.Filter.First.Value : "")" />
                                     <a href="#" class="mvc-grid-filter @filterApplied"></a>
                                 </div>
                             </th>
