@@ -20,8 +20,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void GridHtmlAttributes_ChangesUnderscoresToDashes()
         {
-            String actual = new GridHtmlAttributes(new { data_temp = 100, src = "test.png" }).ToHtmlString();
-            String expected = " data-temp=\"100\" src=\"test.png\"";
+            String actual = new GridHtmlAttributes(new { id = "", data_null = (String)null, data_temp = 10000, src = "test.png" }).ToHtmlString();
+            String expected = " id=\"\" data-null=\"\" data-temp=\"10000\" src=\"test.png\"";
 
             Assert.Equal(expected, actual);
         }

@@ -16,9 +16,17 @@ namespace NonFactors.Mvc.Grid
             return new HtmlGrid<T>(html, new Grid<T>(source)) { PartialViewName = partialViewName };
         }
 
-        public static MvcHtmlString AjaxGrid(this HtmlHelper html, String dataSource)
+        public static MvcHtmlString AjaxGrid(this HtmlHelper html, String dataSource, Object htmlAttributes = null)
         {
-            return html.Partial("MvcGrid/_AjaxGrid", dataSource);
+            GridHtmlAttributes attributes = new GridHtmlAttributes(htmlAttributes);
+            attributes["data-source-url"] = dataSource;
+
+            if (attributes.ContainsKey("class"))
+                attributes["class"] += " mvc-grid";
+            else
+                attributes["class"] = "mvc-grid";
+
+            return html.Partial("MvcGrid/_AjaxGrid", attributes);
         }
     }
 }
