@@ -1,6 +1,5 @@
 using NSubstitute;
 using System;
-using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
@@ -24,7 +23,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         {
             MvcGrid.Filters = Substitute.For<IGridFilters>();
 
-            IGrid<GridModel> grid = new Grid<GridModel>(new GridModel[0]) { Query = new NameValueCollection() };
+            IGrid<GridModel> grid = new Grid<GridModel>(new GridModel[0]);
             column = new GridColumn<GridModel, Object>(grid, model => model.Name);
         }
         public void Dispose()
@@ -32,47 +31,30 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             MvcGrid.Filters = oldFilters;
         }
 
-        #region Filter
+        #region IGridColumn.Sort
 
         [Fact]
-        public void Filter_ReturnsFromGridFilters()
+        public void IGridColumn_ReturnsSort()
         {
-            GridColumnFilter<GridModel, Object> filter = new GridColumnFilter<GridModel, Object>(column);
-            MvcGrid.Filters.GetFilter(column).Returns(filter);
+            IGridColumn gridColumn = column;
 
-            Object actual = column.Filter;
-            Object expected = filter;
+            Object actual = gridColumn.Filter;
+            Object expected = column.Filter;
 
             Assert.Same(expected, actual);
         }
 
-        [Fact]
-        public void Filter_Get_Caches()
-        {
-            GridColumnFilter<GridModel, Object> filter = new GridColumnFilter<GridModel, Object>(column);
-            MvcGrid.Filters.GetFilter(column).Returns(filter);
+        #endregion
 
-            IGridColumnFilter<GridModel, Object> cachedFilter = column.Filter;
-            filter = new GridColumnFilter<GridModel, Object>(column);
-
-            MvcGrid.Filters.GetFilter(column).Returns(filter);
-
-            Object expected = cachedFilter;
-            Object actual = column.Filter;
-
-            Assert.Same(expected, actual);
-        }
+        #region IGridColumn.Filter
 
         [Fact]
-        public void Filter_Set_Caches()
+        public void IGridColumn_ReturnsFilter()
         {
-            GridColumnFilter<GridModel, Object> filter = new GridColumnFilter<GridModel, Object>(column);
+            IGridColumn gridColumn = column;
 
-            column.Filter = new GridColumnFilter<GridModel, Object>(column);
-            column.Filter = filter;
-
-            IGridColumnFilter<GridModel, Object> actual = column.Filter;
-            IGridColumnFilter<GridModel, Object> expected = filter;
+            Object actual = gridColumn.Filter;
+            Object expected = column.Filter;
 
             Assert.Same(expected, actual);
         }
@@ -184,6 +166,28 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             String expected = ExpressionHelper.GetExpressionText(expression);
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GridColumn_SetsFilterFromServices()
+        {
+            MvcGrid.Filters.GetFilter(Arg.Any<GridColumn<GridModel, String>>()).Returns(Substitute.For<IGridColumnFilter<GridModel, String>>());
+
+            IGridColumnFilter expected = MvcGrid.Filters.GetFilter(new GridColumn<GridModel, String>(column.Grid, model => model.Name));
+            IGridColumnFilter actual = new GridColumn<GridModel, String>(column.Grid, model => model.Name).Filter;
+
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void GridColumn_SetsDefaultFilter()
+        {
+            MvcGrid.Filters = null;
+
+            IGridColumnFilter actual = new GridColumn<GridModel, String>(column.Grid, model => model.Name).Filter;
+            IGridColumnFilter expected = new GridColumn<GridModel, String>(column.Grid, model => model.Name).Filter;
+
+            Assert.NotSame(expected, actual);
         }
 
         #endregion

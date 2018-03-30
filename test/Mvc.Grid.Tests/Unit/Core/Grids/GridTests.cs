@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Linq;
 using Xunit;
 
@@ -68,6 +69,15 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             IQueryable<GridModel> actual = new Grid<GridModel>(expected).Source;
 
             Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void Grid_SetsEmptyQuery()
+        {
+            NameValueCollection actual = new Grid<GridModel>(new GridModel[0]).Query;
+            NameValueCollection expected = new NameValueCollection();
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

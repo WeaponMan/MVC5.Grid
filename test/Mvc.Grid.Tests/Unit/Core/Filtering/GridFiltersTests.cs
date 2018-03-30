@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Web;
 using Xunit;
@@ -14,10 +13,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         public GridFiltersTests()
         {
-            column = new GridColumn<GridModel, String>(new Grid<GridModel>(new GridModel[0]), model => model.Name);
-            column.Grid.Query = new NameValueCollection();
-
             filters = new GridFilters();
+            Grid<GridModel> grid = new Grid<GridModel>(new GridModel[0]);
+            column = new GridColumn<GridModel, String>(grid, model => model.Name);
         }
 
         #region GridFilters()
@@ -610,7 +608,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         private void AssertFilterNameFor<TValue>(Expression<Func<AllTypesModel, TValue>> property, String name)
         {
-            Grid<AllTypesModel> grid = new Grid<AllTypesModel>(new AllTypesModel[0]) { Query = new NameValueCollection() };
+            Grid<AllTypesModel> grid = new Grid<AllTypesModel>(new AllTypesModel[0]);
 
             String actual = new GridColumn<AllTypesModel, TValue>(grid, property).Filter.Name;
             String expected = name;

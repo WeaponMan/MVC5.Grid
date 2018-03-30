@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -33,6 +33,7 @@ namespace NonFactors.Mvc.Grid
         public Grid(IEnumerable<T> source)
         {
             Processors = new List<IGridProcessor<T>>();
+            Query = new NameValueCollection();
             Source = source.AsQueryable();
 
             Columns = new GridColumns<T>(this);

@@ -17,7 +17,6 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             IGrid<GridModel> grid = new Grid<GridModel>(new GridModel[8]);
 
             htmlGrid = new HtmlGrid<GridModel>(html, grid);
-
             grid.Columns.Add(model => model.Name);
             grid.Columns.Add(model => model.Sum);
         }
