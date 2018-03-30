@@ -10,16 +10,15 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 {
     public class HtmlGridTests
     {
-        private HtmlHelper html;
-        private IGrid<GridModel> grid;
         private HtmlGrid<GridModel> htmlGrid;
 
         public HtmlGridTests()
         {
-            html = HtmlHelperFactory.CreateHtmlHelper("id=3&name=jim");
-            grid = new Grid<GridModel>(new GridModel[8]);
+            HtmlHelper html = HtmlHelperFactory.CreateHtmlHelper("id=3&name=jim");
+            IGrid<GridModel> grid = new Grid<GridModel>(new GridModel[8]);
 
             htmlGrid = new HtmlGrid<GridModel>(html, grid);
+
             grid.Columns.Add(model => model.Name);
             grid.Columns.Add(model => model.Sum);
         }
@@ -29,9 +28,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_DoesNotChangeQuery()
         {
-            NameValueCollection query = grid.Query = new NameValueCollection();
+            NameValueCollection query = htmlGrid.Grid.Query = new NameValueCollection();
 
-            Object actual = new HtmlGrid<GridModel>(html, grid).Grid.Query;
+            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.Query;
             Object expected = query;
 
             Assert.Same(expected, actual);
@@ -40,10 +39,10 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsGridQuery()
         {
-            grid.Query = null;
+            htmlGrid.Grid.Query = null;
 
-            NameValueCollection expected = html.ViewContext.HttpContext.Request.QueryString;
-            NameValueCollection actual = new HtmlGrid<GridModel>(html, grid).Grid.Query;
+            NameValueCollection expected = htmlGrid.Html.ViewContext.HttpContext.Request.QueryString;
+            NameValueCollection actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.Query;
 
             foreach (String key in expected)
                 Assert.Equal(expected[key], actual[key]);
@@ -55,9 +54,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_DoesNotChangeHttpContext()
         {
-            HttpContextBase httpContext = grid.HttpContext = HttpContextFactory.CreateHttpContextBase("");
+            HttpContextBase httpContext = htmlGrid.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase("");
 
-            Object actual = new HtmlGrid<GridModel>(html, grid).Grid.HttpContext;
+            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.HttpContext;
             Object expected = httpContext;
 
             Assert.Same(expected, actual);
@@ -66,10 +65,10 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsHttpContext()
         {
-            grid.HttpContext = null;
+            htmlGrid.Grid.HttpContext = null;
 
-            HttpContextBase actual = new HtmlGrid<GridModel>(html, grid).Grid.HttpContext;
-            HttpContextBase expected = html.ViewContext.HttpContext;
+            HttpContextBase actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.HttpContext;
+            HttpContextBase expected = htmlGrid.Html.ViewContext.HttpContext;
 
             Assert.Same(expected, actual);
         }
@@ -77,7 +76,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsPartialViewName()
         {
-            String actual = new HtmlGrid<GridModel>(null, grid).PartialViewName;
+            String actual = new HtmlGrid<GridModel>(null, htmlGrid.Grid).PartialViewName;
             String expected = "MvcGrid/_Grid";
 
             Assert.Equal(expected, actual);
@@ -86,8 +85,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsHtml()
         {
-            HtmlHelper actual = new HtmlGrid<GridModel>(html, grid).Html;
-            HtmlHelper expected = html;
+            HtmlHelper actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Html;
+            HtmlHelper expected = htmlGrid.Html;
 
             Assert.Same(expected, actual);
         }
@@ -95,8 +94,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsGrid()
         {
-            IGrid<GridModel> actual = new HtmlGrid<GridModel>(null, grid).Grid;
-            IGrid<GridModel> expected = grid;
+            IGrid<GridModel> actual = new HtmlGrid<GridModel>(null, htmlGrid.Grid).Grid;
+            IGrid<GridModel> expected = htmlGrid.Grid;
 
             Assert.Same(expected, actual);
         }
