@@ -32,7 +32,7 @@
                             {
                                 <div class="first-filter">
                                     <input class="mvc-grid-type" type="hidden" value="@(column.Filter.First != null ? column.Filter.First.Type : "")" />
-                                    <input class="mvc-grid-input" value="@(column.Filter.First.Value != null ? column.Filter.First.Value : "")" placeholder="@column.Title" />
+                                    <input class="mvc-grid-input" value="@(column.Filter.First != null ? column.Filter.First.Value : "")" placeholder="@column.Title" />
                                     <a href="#" class="mvc-grid-filter @filterApplied"></a>
                                 </div>
                             }
@@ -61,7 +61,7 @@
 
                                 <div class="first-filter">
                                     <input class="mvc-grid-type" type="hidden" value="@(column.Filter.First != null ? column.Filter.First.Type : "")" />
-                                    <input class="mvc-grid-input" value="@(column.Filter.First.Value != null ? column.Filter.First.Value : "")" />
+                                    <input class="mvc-grid-input" value="@(column.Filter.First != null ? column.Filter.First.Value : "")" />
                                     <a href="#" class="mvc-grid-filter @filterApplied"></a>
                                 </div>
                             </th>
