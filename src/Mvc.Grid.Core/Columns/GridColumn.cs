@@ -40,7 +40,7 @@ namespace NonFactors.Mvc.Grid
             ProcessorType = GridProcessorType.Pre;
             ExpressionValue = expression.Compile();
             Sort = new GridColumnSort<T, TValue>(this);
-            Filter = (MvcGrid.Filters ?? new GridFilters()).GetFilter(this);
+            Filter = new GridColumnFilter<T, TValue>(this);
         }
 
         public virtual IQueryable<T> Process(IQueryable<T> items)
