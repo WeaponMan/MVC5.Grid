@@ -22,7 +22,7 @@
                         data-filter-second-type="@(column.Filter.Second != null ? column.Filter.Second.Type : "")"
                         data-filter-second-val="@(column.Filter.Second != null ? column.Filter.Second.Value : "")"
                         data-sort="@column.Sort.IsEnabled"
-                        data-sort-order="@column.Sort.Order"
+                        data-sort-order="@column.Sort.Order.ToString().ToLower()"
                         data-sort-first="@column.Sort.FirstOrder">
                         @if (column.Filter.IsEnabled == true && Model.FilterMode != GridFilterMode.FilterRow)
                         {

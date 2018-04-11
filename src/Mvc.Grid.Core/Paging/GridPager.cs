@@ -25,7 +25,7 @@ namespace NonFactors.Mvc.Grid
             get
             {
                 String prefix = String.IsNullOrEmpty(Grid.Name) ? "" : Grid.Name + "-";
-                CurrentPageValue = Int32.TryParse(Grid.Query[prefix + "Page"], out Int32 page) ? page : CurrentPageValue;
+                CurrentPageValue = Int32.TryParse(Grid.Query[prefix + "page"], out Int32 page) ? page : CurrentPageValue;
                 CurrentPageValue = CurrentPageValue > TotalPages ? TotalPages : CurrentPageValue;
                 CurrentPageValue = CurrentPageValue <= 0 ? 1 : CurrentPageValue;
 
@@ -43,7 +43,7 @@ namespace NonFactors.Mvc.Grid
                 if (ShowPageSizes)
                 {
                     String prefix = String.IsNullOrEmpty(Grid.Name) ? "" : Grid.Name + "-";
-                    RowsPerPageValue = Int32.TryParse(Grid.Query[prefix + "Rows"], out Int32 rows) ? rows : RowsPerPageValue;
+                    RowsPerPageValue = Int32.TryParse(Grid.Query[prefix + "rows"], out Int32 rows) ? rows : RowsPerPageValue;
                     RowsPerPageValue = RowsPerPageValue < 0 ? 0 : RowsPerPageValue;
 
                     if (PageSizes.Count > 0 && !PageSizes.Keys.Contains(RowsPerPageValue))

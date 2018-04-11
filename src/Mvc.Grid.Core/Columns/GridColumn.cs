@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -34,11 +35,11 @@ namespace NonFactors.Mvc.Grid
             Grid = grid;
             IsEncoded = true;
             Expression = expression;
+            Name = GetName(expression);
             Title = GetTitle(expression);
             ProcessorType = GridProcessorType.Pre;
             ExpressionValue = expression.Compile();
             Sort = new GridColumnSort<T, TValue>(this);
-            Name = ExpressionHelper.GetExpressionText(expression);
             Filter = (MvcGrid.Filters ?? new GridFilters()).GetFilter(this);
         }
 
@@ -71,6 +72,10 @@ namespace NonFactors.Mvc.Grid
             DisplayAttribute display = body?.Member.GetCustomAttribute<DisplayAttribute>();
 
             return new HtmlString(display?.GetShortName());
+        }
+        private static String GetName(Expression<Func<T, TValue>> expression)
+        {
+            return String.Join("-", Regex.Split(ExpressionHelper.GetExpressionText(expression), "(?<!^)(?=[A-Z])")).ToLower();
         }
         private Object GetValueFor(IGridRow<Object> row)
         {
