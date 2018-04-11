@@ -22,8 +22,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void Grid_CreatesHtmlGridWithHtml()
         {
-            HtmlHelper actual = html.Grid(new GridModel[0]).Html;
-            HtmlHelper expected = html;
+            Object expected = html;
+            Object actual = html.Grid(new GridModel[0]).Html;
 
             Assert.Same(expected, actual);
         }
@@ -44,8 +44,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void Grid_PartialViewName_CreatesHtmlGridWithHtml()
         {
-            HtmlHelper actual = html.Grid("_Partial", new GridModel[0]).Html;
-            HtmlHelper expected = html;
+            Object expected = html;
+            Object actual = html.Grid("_Partial", new GridModel[0]).Html;
 
             Assert.Same(expected, actual);
         }
@@ -65,7 +65,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             String actual = html.Grid("_Partial", new GridModel[0]).PartialViewName;
             String expected = "_Partial";
 
-            Assert.Same(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

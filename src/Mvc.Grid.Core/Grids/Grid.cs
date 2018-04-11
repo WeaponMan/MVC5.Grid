@@ -12,14 +12,14 @@ namespace NonFactors.Mvc.Grid
         public String EmptyText { get; set; }
         public String SourceUrl { get; set; }
         public String CssClasses { get; set; }
-        public GridFilterMode FilterMode { get; set; }
-        public String FooterPartialViewName { get; set; }
-        public GridHtmlAttributes Attributes { get; set; }
 
         public IQueryable<T> Source { get; set; }
+        public GridFilterMode FilterMode { get; set; }
         public NameValueCollection Query { get; set; }
         public HttpContextBase HttpContext { get; set; }
-        public IList<IGridProcessor<T>> Processors { get; set; }
+        public String FooterPartialViewName { get; set; }
+        public GridHtmlAttributes Attributes { get; set; }
+        public HashSet<IGridProcessor<T>> Processors { get; set; }
 
         IGridColumns<IGridColumn> IGrid.Columns => Columns;
         public IGridColumnsOf<T> Columns { get; set; }
@@ -32,9 +32,9 @@ namespace NonFactors.Mvc.Grid
 
         public Grid(IEnumerable<T> source)
         {
-            Processors = new List<IGridProcessor<T>>();
-            Query = new NameValueCollection();
             Source = source.AsQueryable();
+            Query = new NameValueCollection();
+            Processors = new HashSet<IGridProcessor<T>>();
 
             Columns = new GridColumns<T>(this);
             Rows = new GridRows<T>(this);

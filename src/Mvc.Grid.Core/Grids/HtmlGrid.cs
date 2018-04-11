@@ -13,8 +13,8 @@ namespace NonFactors.Mvc.Grid
 
         public HtmlGrid(HtmlHelper html, IGrid<T> grid)
         {
-            Html = html;
             Grid = grid;
+            Html = html;
             PartialViewName = "MvcGrid/_Grid";
             grid.HttpContext = html.ViewContext.HttpContext;
             grid.Query = new NameValueCollection(grid.HttpContext.Request.QueryString);

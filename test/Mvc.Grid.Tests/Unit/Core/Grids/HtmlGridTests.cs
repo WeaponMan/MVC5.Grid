@@ -2,7 +2,6 @@ using NSubstitute;
 using System;
 using System.Collections.Specialized;
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
 using Xunit;
 
@@ -43,8 +42,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         {
             htmlGrid.Grid.HttpContext = null;
 
-            HttpContextBase actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.HttpContext;
-            HttpContextBase expected = htmlGrid.Html.ViewContext.HttpContext;
+            Object expected = htmlGrid.Html.ViewContext.HttpContext;
+            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.HttpContext;
 
             Assert.Same(expected, actual);
         }
@@ -61,8 +60,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsHtml()
         {
-            HtmlHelper actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Html;
-            HtmlHelper expected = htmlGrid.Html;
+            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Html;
+            Object expected = htmlGrid.Html;
 
             Assert.Same(expected, actual);
         }
@@ -70,8 +69,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void HtmlGrid_SetsGrid()
         {
-            IGrid<GridModel> actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid;
-            IGrid<GridModel> expected = htmlGrid.Grid;
+            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid;
+            Object expected = htmlGrid.Grid;
 
             Assert.Same(expected, actual);
         }

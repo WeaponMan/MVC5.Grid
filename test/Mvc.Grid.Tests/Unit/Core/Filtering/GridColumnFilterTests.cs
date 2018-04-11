@@ -165,7 +165,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             IGridFilter actual = filter.First;
 
             Assert.Equal(typeof(StringEqualsFilter), actual.GetType());
-            Assert.Equal("equals", actual.Type);
+            Assert.Equal("equals", actual.Method);
             Assert.Equal(value, actual.Value);
         }
 
@@ -181,7 +181,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             IGridFilter actual = filter.First;
 
             Assert.Equal(typeof(StringContainsFilter), actual.GetType());
-            Assert.Equal("contains", actual.Type);
+            Assert.Equal("contains", actual.Method);
             Assert.Equal("a", actual.Value);
         }
 
@@ -266,7 +266,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             IGridFilter actual = filter.Second;
 
             Assert.Equal(typeof(StringEqualsFilter), actual.GetType());
-            Assert.Equal("equals", actual.Type);
+            Assert.Equal("equals", actual.Method);
             Assert.Equal(value, actual.Value);
         }
 
@@ -282,7 +282,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             IGridFilter actual = filter.Second;
 
             Assert.Equal(typeof(StringEqualsFilter), actual.GetType());
-            Assert.Equal("equals", actual.Type);
+            Assert.Equal("equals", actual.Method);
             Assert.Equal("b", actual.Value);
         }
 
@@ -293,8 +293,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [Fact]
         public void GridColumnFilter_SetsColumn()
         {
-            IGridColumn<GridModel, String> expected = new GridColumn<GridModel, String>(filter.Column.Grid, model => model.Name);
-            IGridColumn<GridModel, String> actual = new GridColumnFilter<GridModel, String>(expected).Column;
+            Object actual = new GridColumnFilter<GridModel, String>(filter.Column).Column;
+            Object expected = filter.Column;
 
             Assert.Same(expected, actual);
         }
@@ -508,8 +508,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             filter.IsEnabled = isEnabled;
             filter.First = new StringContainsFilter { Value = "A" };
 
-            IQueryable actual = filter.Apply(items);
-            IQueryable expected = items;
+            Object actual = filter.Apply(items);
+            Object expected = items;
 
             Assert.Same(expected, actual);
         }
@@ -522,8 +522,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             filter.IsMulti = true;
             filter.IsEnabled = true;
 
-            IQueryable actual = filter.Apply(items);
-            IQueryable expected = items;
+            Object expected = items;
+            Object actual = filter.Apply(items);
 
             Assert.Same(expected, actual);
         }
@@ -536,15 +536,14 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             filter.First = Substitute.For<IGridFilter>();
             filter.Second = Substitute.For<IGridFilter>();
 
-            IQueryable actual = filter.Apply(items);
-            IQueryable expected = items;
+            Object expected = items;
+            Object actual = filter.Apply(items);
 
             Assert.Same(expected, actual);
         }
 
         [Theory]
         [InlineData("or")]
-        [InlineData("Or")]
         [InlineData("OR")]
         public void Apply_UsingAndOperator(String op)
         {
@@ -561,7 +560,6 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         [Theory]
         [InlineData("or")]
-        [InlineData("Or")]
         [InlineData("OR")]
         public void Apply_UsingOrOperator(String op)
         {
@@ -577,9 +575,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         }
 
         [Theory]
+        [InlineData("")]
         [InlineData(null)]
         [InlineData("xor")]
-        [InlineData("andy")]
         public void Apply_InvalidOperator_FirstFilter(String op)
         {
             filter.Operator = op;
@@ -594,9 +592,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         }
 
         [Theory]
+        [InlineData("")]
         [InlineData(null)]
         [InlineData("xor")]
-        [InlineData("andy")]
         public void Apply_InvalidOperator_SecondFilter(String op)
         {
             filter.Operator = op;
@@ -643,8 +641,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         {
             GridColumn<GridModel, Int32?> testColumn = new GridColumn<GridModel, Int32?>(new Grid<GridModel>(new GridModel[0]), model => model.NSum);
             GridColumnFilter<GridModel, Int32?> testFilter = new GridColumnFilter<GridModel, Int32?>(testColumn);
-            testFilter.Second = new Int32Filter { Type = "greater-than", Value = "25" };
-            testFilter.First = new Int32Filter { Type = "equals", Value = "10" };
+            testFilter.Second = new NumberFilter<Int32> { Method = "greater-than", Value = "25" };
+            testFilter.First = new NumberFilter<Int32> { Method = "equals", Value = "10" };
             testFilter.IsEnabled = true;
             testFilter.Operator = "or";
             testFilter.IsMulti = true;
