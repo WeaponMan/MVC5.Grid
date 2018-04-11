@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Mvc" Version="4.0.40804" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

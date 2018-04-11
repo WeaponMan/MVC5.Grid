@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using Xunit;
@@ -129,6 +129,9 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         [InlineData(typeof(String), "contains", typeof(StringContainsFilter))]
         [InlineData(typeof(String), "ends-with", typeof(StringEndsWithFilter))]
         [InlineData(typeof(String), "starts-with", typeof(StringStartsWithFilter))]
+
+        [InlineData(typeof(Enum), "equals", typeof(EnumFilter))]
+        [InlineData(typeof(Enum), "not-equals", typeof(EnumFilter))]
         public void GridFilters_RegistersDefaultFilters(Type type, String method, Type filter)
         {
             Assert.IsType(filter, new GridFilters().GetFilter(type, method));
@@ -151,12 +154,32 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         }
 
         [Fact]
-        public void GetFilter_ForNUllableType()
+        public void GetFilter_ForNullableType()
         {
             IGridFilter actual = filters.GetFilter(typeof(Int32?), "EQUALS");
 
             Assert.IsType<NumberFilter<Int32>>(actual);
             Assert.Equal("equals", actual.Method);
+        }
+
+        [Fact]
+        public void GetFilter_ForSpecificEnumType()
+        {
+            filters.Register(typeof(TestEnum), "equals", typeof(StringEqualsFilter));
+
+            IGridFilter actual = filters.GetFilter(typeof(TestEnum), "EQUALS");
+
+            Assert.IsType<StringEqualsFilter>(actual);
+            Assert.Equal("equals", actual.Method);
+        }
+
+        [Fact]
+        public void GetFilter_ForEnumType()
+        {
+            IGridFilter actual = filters.GetFilter(typeof(TestEnum), "EQUALS");
+
+            Assert.Equal("equals", actual.Method);
+            Assert.IsType<EnumFilter>(actual);
         }
 
         [Fact]
@@ -198,6 +221,23 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             Assert.Equal(filters.BooleanEmptyOptionText(), actual[0].Text);
             Assert.Equal(filters.BooleanTrueOptionText(), actual[1].Text);
             Assert.Equal(filters.BooleanFalseOptionText(), actual[2].Text);
+        }
+
+        [Fact]
+        public void GetFilterOptions_ForEnum()
+        {
+            IGridColumn<GridModel, TestEnum> enumColumn = new GridColumn<GridModel, TestEnum>(column.Grid, model => TestEnum.First);
+
+            SelectListItem[] actual = filters.GetFilterOptions(enumColumn).ToArray();
+
+            Assert.Equal(3, actual.Length);
+
+            Assert.Null(actual[0].Text);
+            Assert.Null(actual[0].Value);
+            Assert.Equal("0", actual[1].Value);
+            Assert.Equal("1", actual[2].Value);
+            Assert.Equal("1st", actual[1].Text);
+            Assert.Equal("2nd", actual[2].Text);
         }
 
         [Fact]
