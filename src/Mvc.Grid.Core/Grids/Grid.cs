@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 
 namespace NonFactors.Mvc.Grid
 {
@@ -14,9 +14,9 @@ namespace NonFactors.Mvc.Grid
         public String CssClasses { get; set; }
 
         public IQueryable<T> Source { get; set; }
+        public ViewContext ViewContext { get; set; }
         public GridFilterMode FilterMode { get; set; }
         public NameValueCollection Query { get; set; }
-        public HttpContextBase HttpContext { get; set; }
         public String FooterPartialViewName { get; set; }
         public GridHtmlAttributes Attributes { get; set; }
         public HashSet<IGridProcessor<T>> Processors { get; set; }

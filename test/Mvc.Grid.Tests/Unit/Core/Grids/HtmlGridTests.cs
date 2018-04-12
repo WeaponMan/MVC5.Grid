@@ -38,12 +38,12 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         }
 
         [Fact]
-        public void HtmlGrid_SetsHttpContext()
+        public void HtmlGrid_SetsViewContext()
         {
-            htmlGrid.Grid.HttpContext = null;
+            htmlGrid.Grid.ViewContext = null;
 
-            Object expected = htmlGrid.Html.ViewContext.HttpContext;
-            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.HttpContext;
+            Object expected = htmlGrid.Html.ViewContext;
+            Object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.ViewContext;
 
             Assert.Same(expected, actual);
         }
