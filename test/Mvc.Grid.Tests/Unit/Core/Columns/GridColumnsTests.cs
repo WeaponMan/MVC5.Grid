@@ -27,8 +27,6 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         #endregion
 
-        #region Add<TValue>(Expression<Func<T, TValue>> expression)
-
         #region Add()
 
         [Fact]
@@ -55,6 +53,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         }
 
         #endregion
+
+        #region Add<TValue>(Expression<Func<T, TValue>> expression)
 
         [Fact]
         public void Add_Expression_GridColumn()
@@ -102,8 +102,6 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
 
         #endregion
 
-        #region Insert<TValue>(Int32 index, Expression<Func<T, TValue>> expression)
-
         #region Insert(Int32 index)
 
         [Fact]
@@ -131,6 +129,8 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         }
 
         #endregion
+
+        #region Insert<TValue>(Int32 index, Expression<Func<T, TValue>> expression)
 
         [Fact]
         public void Insert_Expression_GridColumn()
