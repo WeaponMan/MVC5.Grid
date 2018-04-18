@@ -1,7 +1,5 @@
-using NSubstitute;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using Xunit;
@@ -73,60 +71,23 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         #region AjaxGrid(this HtmlHelper, String dataSource, Object htmlAttributes = null)
 
         [Fact]
-        public void AjaxGrid_RendersPartial()
+        public void AjaxGrid_Div()
         {
-            IView view = Substitute.For<IView>();
-            IViewEngine engine = Substitute.For<IViewEngine>();
-            ViewEngineResult result = Substitute.For<ViewEngineResult>(view, engine);
-            engine.FindPartialView(Arg.Any<ControllerContext>(), "MvcGrid/_AjaxGrid", Arg.Any<Boolean>()).Returns(result);
-            view.When(sub => sub.Render(Arg.Any<ViewContext>(), Arg.Any<TextWriter>())).Do(sub =>
-            {
-                GridHtmlAttributes attributes = sub.Arg<ViewContext>().ViewData.Model as GridHtmlAttributes;
-
-                Assert.Equal("DataSource", attributes["data-source-url"]);
-                Assert.Equal("mvc-grid", attributes["class"]);
-                Assert.Equal(2, attributes.Count);
-
-                sub.Arg<TextWriter>().Write("Rendered");
-            });
-
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(engine);
-
-            String actual = html.AjaxGrid("DataSource").ToHtmlString();
-            String expected = "Rendered";
+            String expected = "<div class=\"mvc-grid\" data-source-url=\"DataSource\"></div>";
+            String actual = html.AjaxGrid("DataSource").ToString();
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void AjaxGrid_RendersPartialWithHtmlAttributes()
+        public void AjaxGrid_AttributedDiv()
         {
-            IView view = Substitute.For<IView>();
-            IViewEngine engine = Substitute.For<IViewEngine>();
-            ViewEngineResult result = Substitute.For<ViewEngineResult>(view, engine);
-            engine.FindPartialView(Arg.Any<ControllerContext>(), "MvcGrid/_AjaxGrid", Arg.Any<Boolean>()).Returns(result);
-            view.When(sub => sub.Render(Arg.Any<ViewContext>(), Arg.Any<TextWriter>())).Do(sub =>
-            {
-                GridHtmlAttributes attributes = sub.Arg<ViewContext>().ViewData.Model as GridHtmlAttributes;
-
-                Assert.Equal("DataSource", attributes["data-source-url"]);
-                Assert.Equal("classy mvc-grid", attributes["class"]);
-                Assert.Equal(1, attributes["data-id"]);
-                Assert.Equal(3, attributes.Count);
-
-                sub.Arg<TextWriter>().Write("Rendered");
-            });
-
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(engine);
-
-            String actual = html.AjaxGrid("DataSource", new { @class = "classy", data_source_url = "Test", data_id = 1 }).ToHtmlString();
-            String expected = "Rendered";
+            String actual = html.AjaxGrid("DataSource", new { @class = "classy", data_source_url = "Test", data_id = 1 }).ToString();
+            String expected = "<div class=\"mvc-grid classy\" data-id=\"1\" data-source-url=\"DataSource\"></div>";
 
             Assert.Equal(expected, actual);
         }
-
+        
         #endregion
     }
 }

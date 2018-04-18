@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
 
 namespace NonFactors.Mvc.Grid
 {
@@ -18,15 +17,12 @@ namespace NonFactors.Mvc.Grid
 
         public static MvcHtmlString AjaxGrid(this HtmlHelper html, String dataSource, Object htmlAttributes = null)
         {
-            GridHtmlAttributes attributes = new GridHtmlAttributes(htmlAttributes);
-            attributes["data-source-url"] = dataSource;
+            TagBuilder grid = new TagBuilder("div");
+            grid.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+            grid.Attributes["data-source-url"] = dataSource;
+            grid.AddCssClass("mvc-grid");
 
-            if (attributes.ContainsKey("class"))
-                attributes["class"] += " mvc-grid";
-            else
-                attributes["class"] = "mvc-grid";
-
-            return html.Partial("MvcGrid/_AjaxGrid", attributes);
+            return new MvcHtmlString(grid.ToString());
         }
     }
 }
