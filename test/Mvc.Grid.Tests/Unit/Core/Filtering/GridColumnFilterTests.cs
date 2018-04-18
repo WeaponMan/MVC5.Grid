@@ -24,8 +24,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             Grid<GridModel> grid = new Grid<GridModel>(new GridModel[0]);
             GridColumn<GridModel, String> column = new GridColumn<GridModel, String>(grid, model => model.Name);
 
-            filter = new GridColumnFilter<GridModel, String>(column);
-            filter.IsEnabled = true;
+            filter = new GridColumnFilter<GridModel, String>(column) { IsEnabled = true };
 
             items = new[]
             {
@@ -226,7 +225,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         {
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-contains=a");
 
-            IGridFilter first = filter.First;
+            IGridFilter expected = filter.First;
 
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-equals=b");
 
@@ -235,6 +234,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             Assert.Equal(typeof(StringContainsFilter), actual.GetType());
             Assert.Equal("contains", actual.Method);
             Assert.Equal("a", actual.Value);
+            Assert.Same(expected, actual);
         }
 
         #endregion
@@ -327,7 +327,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
         {
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-contains=a&name-equals=b");
 
-            IGridFilter second = filter.Second;
+            IGridFilter expected = filter.Second;
 
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-starts-with=d&name-ends-with=e");
 
@@ -336,6 +336,7 @@ namespace NonFactors.Mvc.Grid.Tests.Unit
             Assert.Equal(typeof(StringEqualsFilter), actual.GetType());
             Assert.Equal("equals", actual.Method);
             Assert.Equal("b", actual.Value);
+            Assert.Same(expected, actual);
         }
 
         #endregion
