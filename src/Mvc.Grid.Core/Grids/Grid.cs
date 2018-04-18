@@ -12,7 +12,6 @@ namespace NonFactors.Mvc.Grid
         public String Name { get; set; }
         public String EmptyText { get; set; }
         public String SourceUrl { get; set; }
-        public String CssClasses { get; set; }
 
         public IQueryable<T> Source { get; set; }
         public ViewContext ViewContext { get; set; }
@@ -35,6 +34,7 @@ namespace NonFactors.Mvc.Grid
         {
             Source = source.AsQueryable();
             Query = new NameValueCollection();
+            Attributes = new GridHtmlAttributes();
             Processors = new HashSet<IGridProcessor<T>>();
 
             Columns = new GridColumns<T>(this);
