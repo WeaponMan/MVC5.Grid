@@ -636,7 +636,7 @@ var MvcGridTextFilter = (function (base) {
     function MvcGridTextFilter() {
         base.apply(this);
 
-        this.methods = ['contains', 'not-containts', 'equals', 'not-equals', 'starts-with', 'ends-with'];
+        this.methods = ['contains', 'not-contains', 'equals', 'not-equals', 'starts-with', 'ends-with'];
     }
 
     MvcGridTextFilter.prototype.renderFilter = function (grid, filter) {
