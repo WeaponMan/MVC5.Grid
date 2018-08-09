@@ -114,7 +114,7 @@ namespace NonFactors.Mvc.Grid
             Register(typeof(String), "equals", typeof(StringEqualsFilter));
             Register(typeof(String), "not-equals", typeof(StringNotEqualsFilter));
             Register(typeof(String), "contains", typeof(StringContainsFilter));
-            Register(typeof(String), "not-contains", typeof(StringContainsFilter));
+            Register(typeof(String), "not-contains", typeof(StringNotContainsFilter));
             Register(typeof(String), "ends-with", typeof(StringEndsWithFilter));
             Register(typeof(String), "starts-with", typeof(StringStartsWithFilter));
 

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NonFactors.Mvc.Grid.Filtering.Text
+namespace NonFactors.Mvc.Grid
 {
     public class StringNotContainsFilter : BaseGridFilter
     {

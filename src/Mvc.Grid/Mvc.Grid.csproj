@@ -1,9 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>5.0.0</Version>
+    <Version>5.0.1</Version>
     <TargetFramework>net45</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-
+  <ItemGroup>
+ <Content Include="Content\**\*">
+    <Pack>true</Pack>
+    <PackagePath>content\Content\</PackagePath>
+  </Content>
+  <Content Include="Scripts\**\*">
+    <Pack>true</Pack>
+    <PackagePath>content\Scripts\</PackagePath>
+  </Content>
+ <Content Include="Views\**\*">
+    <Pack>true</Pack>
+    <PackagePath>content\Views\</PackagePath>
+  </Content>
+  </ItemGroup>
 </Project>
