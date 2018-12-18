@@ -17,6 +17,8 @@ namespace NonFactors.Mvc.Grid
         Int32 FirstDisplayPage { get; }
         Int32 PagesToDisplay { get; set; }
 
+        Int32 TotalShowingRows { get; set; }
+
         String CssClasses { get; set; }
         String PartialViewName { get; set; }
     }

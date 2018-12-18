@@ -8,6 +8,8 @@ namespace NonFactors.Mvc.Grid
     {
         public IGrid<T> Grid { get; set; }
 
+        public virtual Int32 TotalShowingRows { get; set; }
+
         public virtual Int32 TotalRows
         {
             get;
@@ -108,9 +110,14 @@ namespace NonFactors.Mvc.Grid
             TotalRows = items.Count();
 
             if (RowsPerPage == 0)
+            {
+                TotalShowingRows = TotalRows;
                 return items;
+            }
 
-            return items.Skip((CurrentPage - 1) * RowsPerPage).Take(RowsPerPage);
+            var data = items.Skip((CurrentPage - 1) * RowsPerPage).Take(RowsPerPage);
+            TotalShowingRows = data.Count();
+            return data;
         }
     }
 }

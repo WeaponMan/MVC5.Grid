@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.Grid.Core", "src\Mvc.Grid.Core\Mvc.Grid.Core.csproj", "{C8601EA2-46E2-4E8D-86DD-0EE7C70AB3EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc.Grid.Core", "src\Mvc.Grid.Core\Mvc.Grid.Core.csproj", "{C8601EA2-46E2-4E8D-86DD-0EE7C70AB3EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.Grid.Tests", "test\Mvc.Grid.Tests\Mvc.Grid.Tests.csproj", "{B0AD8296-C273-48CD-A014-6DBAF2DD33F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc.Grid.Tests", "test\Mvc.Grid.Tests\Mvc.Grid.Tests.csproj", "{B0AD8296-C273-48CD-A014-6DBAF2DD33F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C57402FE-D7BE-4F16-9B6A-3A81690133A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0B6037F4-8835-4AEF-9AE6-41AF751A78B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.Grid", "src\Mvc.Grid\Mvc.Grid.csproj", "{8AD9F3CC-2515-430A-BD14-A53A8CB81B3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc.Grid", "src\Mvc.Grid\Mvc.Grid.csproj", "{8AD9F3CC-2515-430A-BD14-A53A8CB81B3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{8CDEB4A4-3045-4776-AD5E-04B7EF3BB266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{8AD9F3CC-2515-430A-BD14-A53A8CB81B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD9F3CC-2515-430A-BD14-A53A8CB81B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AD9F3CC-2515-430A-BD14-A53A8CB81B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDEB4A4-3045-4776-AD5E-04B7EF3BB266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDEB4A4-3045-4776-AD5E-04B7EF3BB266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDEB4A4-3045-4776-AD5E-04B7EF3BB266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDEB4A4-3045-4776-AD5E-04B7EF3BB266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +45,8 @@ Global
 		{C8601EA2-46E2-4E8D-86DD-0EE7C70AB3EA} = {C57402FE-D7BE-4F16-9B6A-3A81690133A7}
 		{B0AD8296-C273-48CD-A014-6DBAF2DD33F8} = {0B6037F4-8835-4AEF-9AE6-41AF751A78B9}
 		{8AD9F3CC-2515-430A-BD14-A53A8CB81B3E} = {C57402FE-D7BE-4F16-9B6A-3A81690133A7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EED2F7CB-032B-4690-A159-B24C7902279A}
 	EndGlobalSection
 EndGlobal

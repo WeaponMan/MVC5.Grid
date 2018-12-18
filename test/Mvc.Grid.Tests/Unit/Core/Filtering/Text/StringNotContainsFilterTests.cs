@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Linq.Expressions;
 using Xunit;
-using NonFactors.Mvc.Grid.Filtering.Text;
 
 namespace NonFactors.Mvc.Grid.Tests.Unit
 {
